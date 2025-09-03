@@ -1,8 +1,8 @@
 # Run nf-core/oncoanalyser
 
-⚠️ Always refer to official [nf-co.re/oncoanalyser](https://nf-co.re/oncoanalyser) website for detailed documentation about the pipeline and its different running options. 
-
 Here, we provide a **wrapper** to run the whole-genome (`wgts`) mode of the pipeline on an HPC using `sbatch` ([slurm workload manager](https://slurm.schedmd.com/documentation.html))
+
+⚠️ Always refer to the official [nf-co.re/oncoanalyser](https://nf-co.re/oncoanalyser) website for detailed documentation about the pipeline and its different running options. 
 
 ## How to run oncoanalyser
 - Create a working directory to copy your input files and scripts
