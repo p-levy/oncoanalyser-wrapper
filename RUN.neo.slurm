@@ -15,14 +15,13 @@ sample_name=PATIENT # <<<<<<<<<<<---------------- SAMPLE NAME (ALWAYS CHANGE)
 rna_analysis=yes # <<<<<<<<<<<---------------- CHANGE TO "no" if DNA only analysis
 flanks_size=15 # <<<<<<<<<<<---------------- flank+MUT+flank (15 generates 31mers, 12 generates 25mers...)
 data=/mnt/bioinfnas/immuno/plevy/proj/hmftools/${sample_name}/output/${sample_name} # <<<<<<<<<<<---------------- PATH OF ONCOANALYSER OUTPUTS
-ref_genome_version=37
-output_dir=neo # created automatically
+ref_genome_version=38 # <<<<<<<<<<<---------------- 37 or 38
+output_dir=neo_31 # created automatically
+sample_id=${sample_name}T
+rna_sample_id=${sample_id}_RNA # <<<<<<< Double check that one, sometimes {sample_id}RNA (without "_")
 ##############################################################################################################################################################
 
 # VARIABLES TO KEEP (Only change if you know what you're doing!) ##############################################################################################
-sample_id=${sample_name}T
-rna_sample_id=${sample_id}_RNA # <<<<<<< Double check that one, sometimes {sample_id}RNA (without "_")
-
 purple_sv_vcf=/data/purple/${sample_id}.purple.sv.vcf.gz
 purple_somatic_vcf=/data/purple/${sample_id}.purple.somatic.vcf.gz
 sample_rna_bam=/data/alignments/rna/${rna_sample_id}.md.bam
@@ -170,3 +169,6 @@ else
         -output_dir /data/${output_dir} \
         -log_debug
 fi
+
+# Add ProximalVariant column to the neoepitope file (indicates if there is another variant potentially in the same epitope)
+python3 add_neighbor.py ${data}/${output_dir}/${sample_id}.neo.neoepitope.tsv ${data}/${output_dir}/${sample_id}.neo.neoepitope.final.tsv ${flanks_size}
