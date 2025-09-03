@@ -1,5 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=neo_PATIENT    # Job name <<<<<<<<<<<---------------- ALWAYS CHANGE
 #SBATCH --mem=20gb # Job memory request
 #SBATCH -c 1 # max nr threads
 #SBATCH --time=5:00:00           # Time limit hrs:min:sec
@@ -7,21 +6,21 @@
 #SBATCH --error=R-%x.%j.err
 #SBATCH --partition=highmem
 
-# VARIABLES TO CHANGE ########################################################################################################################################
-sample_name=PATIENT # <<<<<<<<<<<---------------- SAMPLE NAME (ALWAYS CHANGE)
-##############################################################################################################################################################
+# VARIABLES TO CHANGE #############################################################
+sample_name=PATIENT # <<<<<<<<<<<---------------- SAMPLE NAME (ALWAYS CHANGE)     #
+###################################################################################
 
-# VARIABLES TO CHECK (Change only if required) ###############################################################################################################
+# VARIABLES TO CHECK (Change only if required) #####################################################################################################
 rna_analysis=yes # <<<<<<<<<<<---------------- CHANGE TO "no" if DNA only analysis
 flanks_size=15 # <<<<<<<<<<<---------------- flank+MUT+flank (15 generates 31mers, 12 generates 25mers...)
 data=/mnt/bioinfnas/immuno/plevy/proj/hmftools/${sample_name}/output/${sample_name} # <<<<<<<<<<<---------------- PATH OF ONCOANALYSER OUTPUTS
 ref_genome_version=38 # <<<<<<<<<<<---------------- 37 or 38
-output_dir=neo_31 # created automatically
-sample_id=${sample_name}T
+output_dir=neo_31 # will be created automatically
+sample_id=${sample_name}T # <<<<<<< Double check, same as in input.csv
 rna_sample_id=${sample_id}_RNA # <<<<<<< Double check that one, sometimes {sample_id}RNA (without "_")
-##############################################################################################################################################################
+####################################################################################################################################################
 
-# VARIABLES TO KEEP (Only change if you know what you're doing!) ##############################################################################################
+# VARIABLES TO KEEP (Only change if you know what you're doing!) ###################################################################################
 purple_sv_vcf=/data/purple/${sample_id}.purple.sv.vcf.gz
 purple_somatic_vcf=/data/purple/${sample_id}.purple.somatic.vcf.gz
 sample_rna_bam=/data/alignments/rna/${rna_sample_id}.md.bam
