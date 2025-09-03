@@ -27,7 +27,7 @@ patient3,patient3,patient3T_RNA,tumor,rna,fastq,library_id:patient3T_RNA;lane:1,
 
 - Run the `RUN.oncoanalyser.slurm` script using `sbatch` as follows:
 ```bash
-sbatch -J OA-patient_X --mail-user=your.email@domain.com RUN.oncoanalyser.slurm input.csv output genome	path/to/oncoanalyser-itag
+sbatch -J OA-patient_X --mail-user=your.email@domain.com RUN.oncoanalyser.slurm input.csv output genome	path/to/oncoanalyser-wrapper
 ```
 
 - Modify the following variables before running:
@@ -35,7 +35,7 @@ sbatch -J OA-patient_X --mail-user=your.email@domain.com RUN.oncoanalyser.slurm 
     - `your.email@domain.com`: replace by your email address
     - `output`: path to desired output (leave `output` for default name)
     - `genome`: **hg38** or **hg19**
-    - `path/to/oncoanalyser-itag`: point to where you `git clone`'d this repo
+    - `path/to/oncoanalyser-wrapper`: point to where you `git clone`'d this repo
 
 <br>
 
