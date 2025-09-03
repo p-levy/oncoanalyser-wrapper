@@ -13,14 +13,14 @@ if len(sys.argv) != 4:
     print(f"Usage: {sys.argv[0]} <input.tsv> <output.tsv>")
     sys.exit(1)
 
-input_file = sys.argv[1]
+input_file = sys.argv[1] 
 output_file = sys.argv[2]
 flanks_size = int(sys.argv[3])
 
 with open(input_file) as fin, open(output_file, "w") as fout:
     lines = [line.rstrip("\n") for line in fin]
     header = lines[0]
-    fout.write(header + "\tNeighboringVariant\n")
+    fout.write(header + "\tProximalVariant\n")
     data = [line.split("\t") for line in lines[1:]]
 
     for i, row in enumerate(data):
