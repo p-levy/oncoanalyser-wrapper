@@ -21,6 +21,7 @@ patient3,patient3,patient3N,normal,dna,fastq,library_id:patient3N;lane:1,/mnt/pe
 patient3,patient3,patient3T,tumor,dna,fastq,library_id:patient3T;lane:1,/mnt/petasan_immuno/raw_data/itag/VHIO/patient3/Fastq/patient3_Tumor_DNA_1.fastq.gz;/mnt/petasan_immuno/raw_data/itag/VHIO/patient3/Fastq/patient3_Tumor_DNA_2.fastq.gz
 patient3,patient3,patient3T_RNA,tumor,rna,fastq,library_id:patient3T_RNA;lane:1,/mnt/petasan_immuno/raw_data/itag/VHIO/patient3/Fastq/patient3_Tumor_RNA_1.fastq.gz;/mnt/petasan_immuno/raw_data/itag/VHIO/patient3/Fastq/patient3_Tumor_RNA_2.fastq.gz
 ```
+🔗 You can find info / help on how to fill the input sample sheet [here](https://nf-co.re/oncoanalyser/2.2.0/docs/usage/#samplesheet).
 
 - Copy a version of the `RUN.oncoanalyser.slurm` script in your working directory
 
@@ -41,7 +42,7 @@ sbatch -J OA-patient_X --mail-user=your.email@domain.com RUN.oncoanalyser.slurm 
 ### Important considerations
 > - 🚨 This wrapper is prepared to run on [VHIO](https://www.vhio.net)'s cluster. If running on a different system, you'll have to **modify the paths** to **references and singularity images** in the `hmf.local.config`, `RUN.oncoanalyser_hg19.sh` and `RUN.oncoanalyser_hg38.sh` files. 🚨
 
-> - 🧬 So far, this wrapper runs the **whole-genome** (`--mode wgts`) version of oncoanalyser. The **exome** (`--mode targeted`) version is currently still under development. As a **consequence**, **purity, ploidy, and CNV calls from `PURPLE`** should not be considered as reliable.
+> - 🧬 So far, this wrapper runs the **whole-genome** (`--mode wgts`) version of oncoanalyser. The **exome** (`--mode targeted`) version is currently still under development. As a **consequence**, **purity, ploidy, and CNV calls from `PURPLE`** should not be considered as reliable. 🧬
 
 ## How to run `NEO`
 
