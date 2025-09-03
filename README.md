@@ -40,9 +40,14 @@ sbatch -J OA-patient_X --mail-user=your.email@domain.com RUN.oncoanalyser.slurm 
 <br>
 
 ### Important considerations
-> - 🚨 This wrapper is prepared to run on [VHIO](https://www.vhio.net)'s cluster. If running on a different system, you'll have to **modify the paths** to **references and singularity images** in the `hmf.local.config`, `RUN.oncoanalyser_hg19.sh` and `RUN.oncoanalyser_hg38.sh` files. 🚨
+- 🚨 This wrapper is prepared to run on [VHIO](https://www.vhio.net)'s cluster. If running on a different system, you'll have to **modify the paths** to **references and singularity images** in the `hmf.local.config`, `RUN.oncoanalyser_hg19.sh` and `RUN.oncoanalyser_hg38.sh` files. 🚨
 
-> - 🧬 So far, this wrapper runs the **whole-genome** (`--mode wgts`) version of oncoanalyser. The **exome** (`--mode targeted`) version is currently still under development. As a **consequence**, **purity, ploidy, and CNV calls from `PURPLE`** should not be considered as reliable. 🧬
+- 🧬 So far, this wrapper runs the **whole-genome** (`--mode wgts`) version of oncoanalyser. The **exome** (`--mode targeted`) version is currently still under development. As a **consequence**, **purity, ploidy, and CNV calls from `PURPLE`** should not be considered as reliable. 🧬
+
+- ✅ Before running for the first time, check if these two adjustments were made:
+    - Make sure the following command was previously ran to consider Ensembl NMD-labeled transcripts as protein coding for the `PAVE` variant annotation step: `sed -i 's/nonsense_mediated_decay/protein_coding/g' ensembl_trans_exon_data.csv` in the hmf_pipeline_resources `common/ensembl_data` folder.
+    - Make sure the hmf_pipeline_resources `dna/variants/gnomad` folder contains all the files but empty, to skip the `PONGnomad` filtering in `PAVE` variant annotation step.
+    
 
 ## How to run `NEO`
 
@@ -73,6 +78,6 @@ sbatch -J NEO-patient_X RUN.neo.slurm # Replace NEO-patient_X by desired slurm j
 ```
 
 ### Important consideration
-> - 🚨 This wrapper is prepared to run on [VHIO](https://www.vhio.net)'s cluster. If running on a different system, you'll have to **modify the paths** to **references** in the `RUN.neo.slurm` file. 🚨
+- 🚨 This wrapper is prepared to run on [VHIO](https://www.vhio.net)'s cluster. If running on a different system, you'll have to **modify the paths** to **references** in the `RUN.neo.slurm` file. 🚨
 
-> - 🧬 In addition to `NEO`, this wrapper runs the `add_neighbor.py` script on the `neo.neoepitope.tsv` output, to generate a `neo.neoepitope.final.tsv` containing an additional `ProximalVariant` column, mentioning if there is a neighboring variant, which will potentially be present in the same epitope. Requires **manual** inspection for now 🔍. See following [GitHub issue.](https://github.com/hartwigmedical/hmftools/issues/709) 🧬 
+- 🧬 In addition to `NEO`, this wrapper runs the `add_neighbor.py` script on the `neo.neoepitope.tsv` output, to generate a `neo.neoepitope.final.tsv` containing an additional `ProximalVariant` column, mentioning if there is a neighboring variant, which will potentially be present in the same epitope. Requires **manual** inspection for now 🔍. See following [GitHub issue.](https://github.com/hartwigmedical/hmftools/issues/709) 🧬 
