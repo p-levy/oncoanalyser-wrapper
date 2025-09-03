@@ -74,3 +74,5 @@ sbatch -J NEO-patient_X RUN.neo.slurm # Replace NEO-patient_X by desired slurm j
 
 ### Important consideration
 > - 🚨 This wrapper is prepared to run on [VHIO](https://www.vhio.net)'s cluster. If running on a different system, you'll have to **modify the paths** to **references** in the `RUN.neo.slurm` file. 🚨
+
+> - 🧬 In addition to `NEO`, this wrapper runs the `add_neighbor.py` script on the `neo.neoepitope.tsv` output, to generate a `neo.neoepitope.final.tsv` containing an additional `ProximalVariant` column, mentioning if there is a neighboring variant, which will potentially be present in the same epitope. Requires **manual** inspection for now 🔍. See following [GitHub issue.](https://github.com/hartwigmedical/hmftools/issues/709) 🧬 
