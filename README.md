@@ -42,7 +42,7 @@ sbatch -J OA-patient_X --mail-user=your.email@domain.com RUN.oncoanalyser.slurm 
 ### Important considerations
 - 🚨 This wrapper is prepared to run on [VHIO](https://www.vhio.net)'s cluster. If running on a different system, you'll have to **modify the paths** to **references and singularity images** in the `hmf.local.config`, `RUN.oncoanalyser_hg19.sh` and `RUN.oncoanalyser_hg38.sh` files. 🚨
 
-- 🧬 So far, this wrapper runs the **whole-genome** (`--mode wgts`) version of oncoanalyser. The **exome** (`--mode targeted`) version is currently still under development. As a **consequence**, **purity, ploidy, and CNV calls from `PURPLE`** should not be considered as reliable. 🧬
+- 🧬 So far, this wrapper runs the **whole-genome** (`--mode wgts`) version of oncoanalyser. The **exome** (`--mode targeted`) version is currently still under development. As a **consequence**, **purity, ploidy, and CNV calls from `PURPLE`** should not be considered as reliable if input `fastq` files are **exome sequencing** results. See [here](https://github.com/p-levy/cfDNA-neo/tree/main/cna) for **purity, ploidy, and CNV calls** from exome data using `ASCAT` 🧬
 
 - ✅ Before running for the first time, check if these two adjustments were made:
     - Make sure the following command was previously ran to consider Ensembl NMD-labeled transcripts as protein coding for the `PAVE` variant annotation step: `sed -i 's/nonsense_mediated_decay/protein_coding/g' ensembl_trans_exon_data.csv` in the hmf_pipeline_resources `common/ensembl_data` folder.
