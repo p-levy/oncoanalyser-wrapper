@@ -3,6 +3,7 @@
 # DO NOT CHANGE THESE LINES
 INPUT=${1}
 OUTPUT=${2}
+OPT_ARGS=${3:-""} # optional arguments to pass to nextflow
 
 # Create cache and tmp directories if they don't exist
 mkdir -p cache
@@ -18,7 +19,8 @@ nextflow run nf-core/oncoanalyser \
   --input ${INPUT} \
   --outdir ${OUTPUT} \
   -c /mnt/bioinfnas/immuno/plevy/proj/hmftools/hmf.local.config \
-  -resume
+  -resume \
+  ${OPT_ARGS}
 
   ## INFOS #################################################################################################################################################################################################################################################################
   # Make sure the following command was previously ran to consider Ensembl NMD-labeled transcripts as protein coding

@@ -27,7 +27,7 @@ patient3,patient3,patient3T_RNA,tumor,rna,fastq,library_id:patient3T_RNA;lane:1,
 
 - Run the `RUN.oncoanalyser.slurm` script using `sbatch` as follows:
 ```bash
-sbatch -J OA-patient_X --mail-user=your.email@domain.com RUN.oncoanalyser.slurm input.csv output genome	path/to/oncoanalyser-wrapper
+sbatch -J OA-patient_X --mail-user=your.email@domain.com RUN.oncoanalyser.slurm input.csv output genome	path/to/oncoanalyser-wrapper [--opt_args="--extra options"]
 ```
 
 - Modify the following variables before running:
@@ -36,6 +36,29 @@ sbatch -J OA-patient_X --mail-user=your.email@domain.com RUN.oncoanalyser.slurm 
     - `output`: path to desired output (leave `output` for default name)
     - `genome`: **hg38** or **hg19**
     - `path/to/oncoanalyser-wrapper`: point to where you `git clone`'d this repo
+    - `--opt_args` (optional): additional nextflow arguments to pass to the pipeline
+
+### Optional Arguments (`--opt_args`)
+
+The wrapper now supports passing additional arguments to the nextflow oncoanalyser pipeline through the `--opt_args` parameter. This allows you to customize the pipeline execution without modifying the scripts.
+
+**Examples:**
+- Run only specific processes:
+```bash
+sbatch -J OA-patient_X --mail-user=your.email@domain.com RUN.oncoanalyser.slurm input.csv output hg38 /path/to/oncoanalyser-wrapper --opt_args="--processes_manual --processes_include alignment,redux,cobalt,amber,sage"
+```
+
+- Skip specific processes:
+```bash
+sbatch -J OA-patient_X --mail-user=your.email@domain.com RUN.oncoanalyser.slurm input.csv output hg38 /path/to/oncoanalyser-wrapper --opt_args="--processes_manual --processes_exclude linx,cuppa"
+```
+
+- Combine multiple options:
+```bash
+sbatch -J OA-patient_X --mail-user=your.email@domain.com RUN.oncoanalyser.slurm input.csv output hg38 /path/to/oncoanalyser-wrapper --opt_args="--processes_manual --processes_include alignment,redux,cobalt,amber,sage --max_cpus 16"
+```
+
+⚠️ **Note**: When using `--opt_args`, make sure to enclose the arguments in quotes and refer to the [official oncoanalyser documentation](https://nf-co.re/oncoanalyser) for valid parameter names and values.
 
 <br>
 
