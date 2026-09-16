@@ -8,6 +8,7 @@
 
 # VARIABLES TO CHANGE #############################################################
 sample_name=PATIENT # <<<<<<<<<<<---------------- SAMPLE NAME (ALWAYS CHANGE)     #
+scriptPath=/mnt/bioinfnas/immuno/plevy/proj/hmftools/oncoanalyser-wrapper         #
 ###################################################################################
 
 # VARIABLES TO CHECK (Change only if required) #####################################################################################################
@@ -24,7 +25,7 @@ rna_sample_id=${sample_id}_RNA # <<<<<<< Double check that one, sometimes {sampl
 purple_sv_vcf=/data/purple/${sample_id}.purple.sv.vcf.gz
 purple_somatic_vcf=/data/purple/${sample_id}.purple.somatic.vcf.gz
 sample_rna_bam=/data/alignments/rna/${rna_sample_id}.md.bam
-sage_rna_vcf=/data/sage/append/${sample_id}.sage.append.vcf.gz
+sage_rna_vcf=/data/sage_append/somatic/${sample_id}.sage.append.vcf.gz
 
 cancer_type=Skin
 
@@ -59,8 +60,8 @@ docker run --rm \
     -v ${data}:/data \
     -v /mnt/bioinfnas/immuno/Jonatan/References/hmftools:/tools \
     -v /mnt/bioinfnas/immuno/Jonatan/References/hmftools_ref:/ref \
-    openjdk:latest \
-    java -jar /tools/linx_v1.25.jar \
+    eclipse-temurin:17-jre-jammy \
+    java -jar /tools/linx_v2.2.jar \
     -sample ${sample_id} \
     -sv_vcf ${purple_sv_vcf} \
     -purple_dir ${purple_dir} \
@@ -78,10 +79,10 @@ docker run --rm \
     -v ${data}:/data \
     -v /mnt/bioinfnas/immuno/Jonatan/References/hmftools:/tools \
     -v /mnt/bioinfnas/immuno/Jonatan/References/hmftools_ref:/ref \
-    openjdk:latest \
+    eclipse-temurin:17-jre-jammy \
     java \
     -Xmx16G \
-    -jar /tools/neo_v1.2_beta.jar \
+    -jar /tools/neo_v1.3-beta.1.jar \
     \
     -sample ${sample_id} \
     -somatic_vcf ${purple_somatic_vcf} \
@@ -101,7 +102,7 @@ if [ -n "$rna_analysis" ] && [ "$rna_analysis" = "yes" ]; then
         -v ${data}:/data \
         -v /mnt/bioinfnas/immuno/Jonatan/References/hmftools:/tools \
         -v /mnt/bioinfnas/immuno/Jonatan/References/hmftools_ref:/ref \
-        openjdk:latest \
+        eclipse-temurin:17-jre-jammy \
         java \
         -Xmx16G \
         -jar /tools/isofox_v1.7.1.jar \
@@ -125,7 +126,7 @@ if [ -n "$rna_analysis" ] && [ "$rna_analysis" = "yes" ]; then
         -v ${data}:/data \
         -v /mnt/bioinfnas/immuno/Jonatan/References/hmftools:/tools \
         -v /mnt/bioinfnas/immuno/Jonatan/References/hmftools_ref:/ref \
-        openjdk:latest \
+        eclipse-temurin:17-jre-jammy \
         java \
         -Xmx16G \
         -cp /tools/neo_v1.2_beta.jar com.hartwig.hmftools.neo.score.NeoScorer\
@@ -151,7 +152,7 @@ else
         -v ${data}:/data \
         -v /mnt/bioinfnas/immuno/Jonatan/References/hmftools:/tools \
         -v /mnt/bioinfnas/immuno/Jonatan/References/hmftools_ref:/ref \
-        openjdk:latest \
+        eclipse-temurin:17-jre-jammy \
         java \
         -Xmx16G \
         -cp /tools/neo_v1.2_beta.jar com.hartwig.hmftools.neo.score.NeoScorer\
@@ -170,4 +171,7 @@ else
 fi
 
 # Add ProximalVariant column to the neoepitope file (indicates if there is another variant potentially in the same epitope)
-python3 add_neighbor.py ${data}/${output_dir}/${sample_id}.neo.neoepitope.tsv ${data}/${output_dir}/${sample_id}.neo.neoepitope.final.tsv ${flanks_size}
+python3 ${scriptPath}/add_neighbor.py ${data}/${output_dir}/${sample_id}.neo.neoepitope.tsv ${data}/${output_dir}/${sample_id}.neo.neoepitope.final.tsv ${flanks_size}
+
+# Add HGVSg annotation to the neoepitope file
+python3 ${scriptPath}/add_hgvs.py ${data}/${output_dir}/${sample_id}.neo.neoepitope.final.tsv ${data}/pave/${sample_id}.pave.somatic.vcf.gz ${data}/${output_dir}/${sample_id}.neo.neoepitope.final_hgvs.tsv

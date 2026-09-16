@@ -1,6 +1,6 @@
 # Run nf-core/oncoanalyser
 
-Here, we provide a **wrapper** to run the whole-genome (`wgts`) mode of the [nf-co.re/oncoanalyser](https://nf-co.re/oncoanalyser) pipeline on an HPC using `sbatch` ([slurm workload manager](https://slurm.schedmd.com/documentation.html))
+Here, we provide a **wrapper** to run the whole-genome (`wgts`) mode of the [nf-co.re/oncoanalyser](https://nf-co.re/oncoanalyser) (version 3.0.0) pipeline on an HPC using `sbatch` ([slurm workload manager](https://slurm.schedmd.com/documentation.html))
 
 ⚠️ Always refer to the official [nf-co.re/oncoanalyser](https://nf-co.re/oncoanalyser) website for detailed documentation about the pipeline and its different running options. 
 
@@ -104,3 +104,5 @@ sbatch -J NEO-patient_X RUN.neo.slurm # Replace NEO-patient_X by desired slurm j
 - 🚨 This wrapper is prepared to run on [VHIO](https://www.vhio.net)'s cluster. If running on a different system, you'll have to **modify the paths** to **references** in the `RUN.neo.slurm` file. 🚨
 
 - 🧬 In addition to `NEO`, this wrapper runs the `add_neighbor.py` script on the `neo.neoepitope.tsv` output, to generate a `neo.neoepitope.final.tsv` containing an additional `ProximalVariant` column, mentioning if there is a neighboring variant, which will potentially be present in the same epitope. Requires **manual** inspection for now 🔍. See following [GitHub issue.](https://github.com/hartwigmedical/hmftools/issues/709) 🧬 
+
+- Now also runs the `add_hgvs.py` script to generate a `neo.neoepitope.final_hgvs.tsv` output containing an additional `HGVS_p` column, descriping the amino-acid changes. 
